@@ -1,21 +1,33 @@
-/* ASJ Tours & Travels — implements the Claude Design artboards 1a–1e.
+/* ASJ Tours & Travels — layout from the Claude Design artboards 1a–1e,
+   palette from the business card (D12): black, red, white.
    Mobile-first. Desktop layout kicks in at 1000px. */
 
 :root {
   color-scheme: light;
-  --ink: #17130F;
-  --ink-2: #2A231C;
-  --ink-deep: #0E0B09;
-  --brass: #B4883B;
-  --brass-ink: #8C6520;
-  --cream: #E4DED1;
-  --cream-2: #F6F0E4;
-  --paper: #FFFCF6;
-  --body: #3A3026;
-  --muted: #4A3F33;
-  --faint: #6B5C4A;
-  --line: rgba(23, 19, 15, .14);
-  --line-light: rgba(246, 240, 228, .28);
+
+  /* Neutral blacks — the card's ground. Not the old warm brown. */
+  --ink: #121212;
+  --ink-2: #1E1E1E;
+  --ink-deep: #0A0A0A;
+
+  /* Three reds, because one red cannot pass contrast on both grounds.
+     --red        fills and borders. White text on it: 4.8:1
+     --red-deep   red text on white or grey: 6.3:1
+     --red-bright red text on the black ground: 5.7:1  (--red there is only 4.0:1)
+     Never swap them: --red as small text on black fails WCAG AA. */
+  --red: #E11B22;
+  --red-deep: #B3161B;
+  --red-bright: #FF4A45;
+
+  /* Greys replace the old creams. Kept as --cream* so the 40 call sites still read. */
+  --cream: #E3E3E3;
+  --cream-2: #F2F2F2;
+  --paper: #FFFFFF;
+  --body: #383838;
+  --muted: #4A4A4A;
+  --faint: #6E6E6E;
+  --line: rgba(18, 18, 18, .14);
+  --line-light: rgba(255, 255, 255, .26);
   --serif: 'Spectral', Georgia, serif;
   --sans: 'IBM Plex Sans', system-ui, sans-serif;
   --telugu: 'Noto Sans Telugu', 'IBM Plex Sans', sans-serif;
@@ -41,10 +53,10 @@ body {
 html[lang="te"] body { font-family: var(--telugu); }
 html[lang="te"] h1, html[lang="te"] h2, html[lang="te"] h3 { font-family: var(--telugu); }
 
-a { color: var(--brass-ink); text-decoration: none; }
-a:hover { color: var(--brass); }
+a { color: var(--red-deep); text-decoration: none; }
+a:hover { color: var(--red); }
 a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visible {
-  outline: 3px solid var(--brass);
+  outline: 3px solid var(--red);
   outline-offset: 2px;
 }
 
@@ -63,10 +75,10 @@ img { max-width: 100%; display: block; }
   font-size: 12px;
   letter-spacing: .16em;
   text-transform: uppercase;
-  color: var(--brass-ink);
+  color: var(--red-deep);
   font-weight: 600;
 }
-.on-ink .kicker { color: var(--brass); }
+.on-ink .kicker { color: var(--red-bright); }
 
 .h-section { font-size: 26px; }
 .h-card { font-size: 20px; }
@@ -90,17 +102,17 @@ img { max-width: 100%; display: block; }
 }
 .btn-ink { background: var(--ink); color: var(--paper); }
 .btn-ink:hover { background: var(--ink-2); color: var(--paper); }
-.btn-brass { background: var(--brass); color: var(--ink); font-weight: 700; }
-.btn-brass:hover { color: var(--ink); filter: brightness(1.06); }
+.btn-red { background: var(--red); color: var(--paper); font-weight: 700; }
+.btn-red:hover { color: var(--paper); filter: brightness(1.08); }
 .btn-outline { background: var(--paper); color: var(--ink); border: 1.5px solid var(--ink); }
 .btn-outline:hover { color: var(--ink); }
-.on-ink .btn-outline { background: transparent; color: var(--paper); border-color: rgba(246, 240, 228, .5); }
+.on-ink .btn-outline { background: transparent; color: var(--paper); border-color: rgba(255, 255, 255, .5); }
 .btn-row { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
 .link-more {
   display: inline-block;
   font-size: 15px;
   font-weight: 600;
-  border-bottom: 1px solid var(--brass);
+  border-bottom: 1px solid var(--red);
   padding-bottom: 2px;
 }
 
@@ -125,7 +137,7 @@ img { max-width: 100%; display: block; }
 .brand-sub {
   font-size: 9px;
   letter-spacing: .22em;
-  color: var(--brass);
+  color: var(--red-bright);
   text-transform: uppercase;
 }
 .header-right { display: flex; align-items: center; gap: 8px; }
@@ -135,13 +147,13 @@ img { max-width: 100%; display: block; }
   align-items: center;
   min-height: 44px;
   padding: 0 12px;
-  background: var(--brass);
-  color: var(--ink);
+  background: var(--red);
+  color: var(--paper);
   font-weight: 700;
   font-size: 14px;
   border-radius: 6px;
 }
-.header-phone:hover { color: var(--ink); }
+.header-phone:hover { color: var(--paper); }
 
 .lang {
   display: flex;
@@ -160,7 +172,7 @@ img { max-width: 100%; display: block; }
   color: var(--cream-2);
 }
 .lang button[data-lang="te"] { font-family: var(--telugu); }
-.lang button[aria-pressed="true"] { background: var(--brass); color: var(--ink); }
+.lang button[aria-pressed="true"] { background: var(--red); color: var(--ink); }
 
 /* ---------- image slots (replace with real photos, see CONTENT.md) ---------- */
 .img-slot {
@@ -173,9 +185,9 @@ img { max-width: 100%; display: block; }
   line-height: 1.45;
   color: var(--faint);
   background:
-    repeating-linear-gradient(45deg, rgba(23, 19, 15, .05) 0 12px, transparent 12px 24px),
+    repeating-linear-gradient(45deg, rgba(18, 18, 18, .05) 0 12px, transparent 12px 24px),
     var(--cream-2);
-  border: 1px dashed rgba(23, 19, 15, .25);
+  border: 1px dashed rgba(18, 18, 18, .25);
 }
 .img-slot.rounded { border-radius: 8px; }
 .img-hero { height: 300px; }
@@ -197,7 +209,7 @@ img { max-width: 100%; display: block; }
   font-size: 13px;
   font-weight: 600;
 }
-.trust .dot { color: var(--brass); }
+.trust .dot { color: var(--red-bright); }
 
 /* ---------- cards ---------- */
 .card-list { display: flex; flex-direction: column; gap: 12px; margin-top: 18px; }
@@ -221,27 +233,27 @@ img { max-width: 100%; display: block; }
   font-size: 11px;
   letter-spacing: .12em;
   text-transform: uppercase;
-  color: var(--brass);
+  color: var(--red-bright);
   font-weight: 700;
   padding-bottom: 8px;
-  border-bottom: 1px solid rgba(246, 240, 228, .28);
+  border-bottom: 1px solid rgba(255, 255, 255, .26);
 }
 .rate-head.num { text-align: right; padding-left: 14px; }
-.rate-route { padding: 14px 0; border-bottom: 1px solid rgba(246, 240, 228, .14); }
+.rate-route { padding: 14px 0; border-bottom: 1px solid rgba(255, 255, 255, .14); }
 .rate-route-name { font-size: 16px; font-weight: 600; line-height: 1.3; }
-.rate-route-km { font-size: 13px; color: rgba(246, 240, 228, .6); margin-top: 3px; }
+.rate-route-km { font-size: 13px; color: rgba(255, 255, 255, .62); margin-top: 3px; }
 .rate-price {
   padding: 14px 0 14px 14px;
   text-align: right;
   font-size: 19px;
   font-weight: 600;
-  border-bottom: 1px solid rgba(246, 240, 228, .14);
+  border-bottom: 1px solid rgba(255, 255, 255, .14);
   white-space: nowrap;
 }
 /* light variant, used on rates.html */
-.rate-light .rate-head { color: var(--brass-ink); border-bottom: 1.5px solid var(--ink); }
+.rate-light .rate-head { color: var(--red-deep); border-bottom: 1.5px solid var(--ink); }
 .rate-light .rate-route,
-.rate-light .rate-price { border-bottom: 1px solid rgba(23, 19, 15, .12); }
+.rate-light .rate-price { border-bottom: 1px solid rgba(18, 18, 18, .12); }
 .rate-light .rate-route-km { color: var(--faint); }
 
 .charges {
@@ -255,7 +267,7 @@ img { max-width: 100%; display: block; }
   justify-content: space-between;
   gap: 14px;
   padding: 14px 16px;
-  border-bottom: 1px solid rgba(23, 19, 15, .1);
+  border-bottom: 1px solid rgba(18, 18, 18, .1);
   background: var(--paper);
 }
 .charge-row:last-child { border-bottom: 0; }
@@ -266,18 +278,18 @@ img { max-width: 100%; display: block; }
   margin-top: 16px;
   padding: 16px;
   background: var(--cream-2);
-  border-left: 3px solid var(--brass);
+  border-left: 3px solid var(--red);
 }
 .note div { font-size: 15px; line-height: 1.6; color: var(--body); }
 .note div + div { margin-top: 8px; }
-.on-ink .note { background: rgba(246, 240, 228, .06); }
-.on-ink .note div { color: rgba(246, 240, 228, .9); }
+.on-ink .note { background: rgba(255, 255, 255, .06); }
+.on-ink .note div { color: rgba(255, 255, 255, .9); }
 
 /* ---------- why / reliability ---------- */
 .owner { display: flex; gap: 14px; align-items: flex-start; margin-top: 18px; }
 .owner .img-slot { width: 104px; height: 128px; flex: none; }
 .reasons { display: flex; flex-direction: column; gap: 14px; margin-top: 22px; }
-.reason { padding-left: 14px; border-left: 2px solid var(--brass); }
+.reason { padding-left: 14px; border-left: 2px solid var(--red); }
 .reason-title { font-size: 16px; font-weight: 600; }
 .reason-text { font-size: 15px; color: var(--muted); line-height: 1.5; margin-top: 3px; }
 
@@ -324,7 +336,7 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
   line-height: 1.35;
   font-family: inherit;
 }
-.faq-sign { font-size: 22px; color: var(--brass); font-weight: 400; flex: none; }
+.faq-sign { font-size: 22px; color: var(--red); font-weight: 400; flex: none; }
 .faq-a {
   font-size: 15px;
   line-height: 1.6;
@@ -343,15 +355,15 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
   font-variant-numeric: tabular-nums;
   letter-spacing: -.01em;
 }
-.big-phone:hover { color: var(--brass); }
-.contact-lines { font-size: 15px; color: rgba(246, 240, 228, .75); margin-top: 6px; line-height: 1.6; }
+.big-phone:hover { color: var(--red); }
+.contact-lines { font-size: 15px; color: rgba(255, 255, 255, .75); margin-top: 6px; line-height: 1.6; }
 
 .site-footer {
   padding: 24px var(--pad) 22px;
   background: var(--ink-deep);
-  color: rgba(246, 240, 228, .6);
+  color: rgba(255, 255, 255, .62);
 }
-.site-footer a { color: rgba(246, 240, 228, .8); }
+.site-footer a { color: rgba(255, 255, 255, .8); }
 .footer-brand { font-family: var(--serif); font-size: 18px; color: var(--paper); }
 .footer-links { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 14px; font-size: 14px; }
 
@@ -363,8 +375,8 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1px;
-  background: rgba(23, 19, 15, .2);
-  border-top: 1px solid rgba(23, 19, 15, .2);
+  background: rgba(18, 18, 18, .2);
+  border-top: 1px solid rgba(18, 18, 18, .2);
 }
 .sticky-bar a {
   display: flex;
@@ -376,13 +388,13 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
 }
 .sticky-call { background: var(--ink); color: var(--paper); }
 .sticky-call:hover { color: var(--paper); }
-.sticky-wa { background: var(--brass); color: var(--ink); font-weight: 700; }
+.sticky-wa { background: var(--red); color: var(--ink); font-weight: 700; }
 .sticky-wa:hover { color: var(--ink); }
 
 /* ---------- forms (corporate) ---------- */
 .form-box {
   background: var(--cream-2);
-  border: 1px solid rgba(23, 19, 15, .16);
+  border: 1px solid rgba(18, 18, 18, .16);
   border-radius: 12px;
   padding: 24px;
 }
@@ -394,7 +406,7 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
   font-size: 17px;
   font-family: inherit;
   line-height: 1.5;
-  border: 1.5px solid rgba(23, 19, 15, .3);
+  border: 1.5px solid rgba(18, 18, 18, .3);
   border-radius: 8px;
   background: var(--paper);
   color: var(--ink);
@@ -407,12 +419,12 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
 
 /* ---------- corporate bands ---------- */
 .band {
-  border: 1px solid rgba(246, 240, 228, .25);
+  border: 1px solid rgba(255, 255, 255, .25);
   border-radius: 12px;
   padding: 26px;
 }
-.band-featured { border: 1.5px solid var(--brass); background: rgba(180, 136, 59, .1); }
-.band-hours { font-size: 18px; color: rgba(246, 240, 228, .8); margin-top: 14px; }
+.band-featured { border: 1.5px solid var(--red); background: rgba(180, 136, 59, .1); }
+.band-hours { font-size: 18px; color: rgba(255, 255, 255, .8); margin-top: 14px; }
 .band-price {
   font-size: 40px;
   font-weight: 700;
@@ -420,17 +432,17 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
   font-variant-numeric: tabular-nums;
   letter-spacing: -.02em;
 }
-.band-price span { font-size: 19px; font-weight: 600; color: rgba(246, 240, 228, .65); }
-.band-note { font-size: 15px; color: rgba(246, 240, 228, .7); margin-top: 12px; line-height: 1.6; }
+.band-price span { font-size: 19px; font-weight: 600; color: rgba(255, 255, 255, .65); }
+.band-note { font-size: 15px; color: rgba(255, 255, 255, .7); margin-top: 12px; line-height: 1.6; }
 .extras {
   display: flex;
   flex-wrap: wrap;
   gap: 14px 40px;
   margin-top: 28px;
   padding-top: 24px;
-  border-top: 1px solid rgba(246, 240, 228, .2);
+  border-top: 1px solid rgba(255, 255, 255, .2);
   font-size: 16px;
-  color: rgba(246, 240, 228, .85);
+  color: rgba(255, 255, 255, .85);
 }
 
 .tile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
@@ -452,7 +464,7 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
 .summary-sheet {
   margin-top: 24px;
   background: #fff;
-  border: 1px solid rgba(23, 19, 15, .18);
+  border: 1px solid rgba(18, 18, 18, .18);
   padding: 28px 24px;
   max-width: 1000px;
 }
@@ -468,7 +480,7 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
 .summary-foot {
   margin-top: 24px;
   padding-top: 20px;
-  border-top: 1px solid rgba(23, 19, 15, .16);
+  border-top: 1px solid rgba(18, 18, 18, .16);
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -493,8 +505,8 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
   .brand-name { font-size: 28px; }
   .brand-sub { font-size: 11px; letter-spacing: .24em; }
   .site-nav { display: flex; align-items: center; gap: 28px; }
-  .site-nav a { font-size: 15px; color: rgba(246, 240, 228, .85); }
-  .site-nav a:hover { color: var(--brass); }
+  .site-nav a { font-size: 15px; color: rgba(255, 255, 255, .85); }
+  .site-nav a:hover { color: var(--red); }
   .header-right { gap: 24px; }
   .header-phone {
     background: none;
@@ -508,7 +520,7 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
     align-items: center;
     min-height: 44px;
     padding: 0 20px;
-    background: var(--brass);
+    background: var(--red);
     color: var(--ink);
     font-weight: 700;
     font-size: 15px;
@@ -561,11 +573,11 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
     padding: 20px 0 20px 28px;
     text-align: right;
     font-size: 17px;
-    color: rgba(246, 240, 228, .65);
-    border-bottom: 1px solid rgba(246, 240, 228, .14);
+    color: rgba(255, 255, 255, .65);
+    border-bottom: 1px solid rgba(255, 255, 255, .14);
     white-space: nowrap;
   }
-  .rate-light .rate-grid .col-km { color: var(--faint); border-bottom: 1px solid rgba(23, 19, 15, .12); }
+  .rate-light .rate-grid .col-km { color: var(--faint); border-bottom: 1px solid rgba(18, 18, 18, .12); }
   .rate-route { padding: 20px 0; font-size: 19px; }
   .rate-route .rate-route-km { display: none; }
   .rate-price { padding: 20px 0 20px 40px; font-size: 24px; }
@@ -610,7 +622,7 @@ html[lang="te"] .quote p { font-family: var(--telugu); }
   .tile-grid { gap: 16px; }
   .tile { padding: 20px; font-size: 17px; }
   .form-box { padding: 40px; }
-  .summary-sheet { padding: 56px 64px; box-shadow: 0 12px 30px rgba(23, 19, 15, .08); }
+  .summary-sheet { padding: 56px 64px; box-shadow: 0 12px 30px rgba(18, 18, 18, .08); }
   .summary-head { flex-direction: row; align-items: flex-start; justify-content: space-between; gap: 40px; }
   .summary-head .right { text-align: right; }
   .summary-grid { grid-template-columns: 1fr 1fr; gap: 40px; }
