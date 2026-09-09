@@ -1,2 +1,6 @@
+# Open to crawlers as of 2026-09-10. Contact details are the owner's real ones.
+# Rates are still awaiting sign-off — see CONTENT.md C6 before spending on ads.
 User-agent: *
-Disallow: /
+Allow: /
+
+Sitemap: https://jak2.github.io/asj-travels-09-sept/sitemap.xml

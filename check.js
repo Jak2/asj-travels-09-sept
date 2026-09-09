@@ -11,7 +11,7 @@ assert.strictEqual(decodeURIComponent(share.slice("https://wa.me/?text=".length)
 // form validation
 const ok = { company: "Bank", contact: "Ramesh", route: "town duty", phone: "9848045123" };
 assert.strictEqual(s.validateEnquiry(ok), "");
-assert.strictEqual(s.validateEnquiry(Object.assign({}, ok, { phone: "+91 98480 45123" })), "");
+assert.strictEqual(s.validateEnquiry(Object.assign({}, ok, { phone: "+91 94401 44104" })), "");
 assert.match(s.validateEnquiry(Object.assign({}, ok, { company: "" })), /Please fill/);
 assert.match(s.validateEnquiry(Object.assign({}, ok, { company: "  " })), /Please fill/);
 assert.match(s.validateEnquiry(Object.assign({}, ok, { phone: "12345" })), /10-digit/);
@@ -62,6 +62,34 @@ const ratio = (a, b) => {
 ].forEach(([label, a, b, min]) => {
   const r = ratio(token(a), token(b));
   assert.ok(r >= min, `${label}: ${r.toFixed(2)}:1, needs ${min}:1`);
+});
+
+// SEO and identity. Every page must be indexable, self-describing, and reachable
+// by phone. A silent regression here is invisible until the ad spend is wasted.
+const PHONE_DIGITS = "919440144104";
+const files = ["index.html", "rates.html", "corporate.html"];
+files.forEach((f, i) => {
+  const html = pages[i];
+  assert.ok(/<link rel="canonical" href="https:\/\/[^"]+">/.test(html), `${f}: no canonical`);
+  assert.ok(/<meta name="description" content="[^"]{80,300}">/.test(html), `${f}: description missing or wrong length`);
+  assert.ok((html.match(/<h1[\s>]/g) || []).length === 1, `${f}: needs exactly one <h1>`);
+  assert.ok(/<html lang="en-IN">/.test(html), `${f}: missing lang`);
+  assert.ok(html.includes(PHONE_DIGITS), `${f}: booking number missing`);
+  assert.ok(!/9848045123/.test(html), `${f}: old placeholder number still present`);
+  assert.ok(!/\[to be confirmed\]/.test(html), `${f}: placeholder text still visible to visitors`);
+  // Structured data must parse, or Google silently ignores the whole block.
+  const blocks = html.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g) || [];
+  assert.ok(blocks.length >= 1, `${f}: no structured data`);
+  blocks.forEach((b) => JSON.parse(b.replace(/<\/?script[^>]*>/g, "")));
+});
+
+// robots must not be blocking, and the sitemap must list every page
+const robots = require("fs").readFileSync("robots.txt", "utf8");
+assert.ok(!/^Disallow: \/$/m.test(robots), "robots.txt is blocking the whole site");
+const sitemap = require("fs").readFileSync("sitemap.xml", "utf8");
+files.forEach((f) => {
+  const leaf = f === "index.html" ? "/" : "/" + f;
+  assert.ok(sitemap.includes(leaf), `sitemap missing ${leaf}`);
 });
 
 console.log("ok — all checks passed");

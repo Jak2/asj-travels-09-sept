@@ -1,8 +1,8 @@
 /* ASJ Tours & Travels — FAQ accordion, WhatsApp share, quote form.
    No framework, no build. All page content is in the HTML; this file only adds behaviour. */
 
-var WA = "919848045123";            // TODO(owner): verify — booking number, digits only
-var PHONE = "+91 98480 45123";      // TODO(owner): same number, display form
+var WA = "919440144104";            // TODO(owner): verify — booking number, digits only
+var PHONE = "+91 94401 44104";      // TODO(owner): same number, display form
 
 /* TODO(owner): these five prices repeat rates.html. Change both together. See CONTENT.md C6. */
 var SHARE_TEXT = "ASJ Tours & Travels, Ongole — published rate card\n\n" +
